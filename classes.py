@@ -30,3 +30,29 @@ class PlagBoard:
             elif plag[1] == input:
                 return plag[0]
         return input
+
+class Enigma:
+    def __init__(self, r_dicts, r_cnts):
+        self.plagboard = PlagBoard()
+        self.reflector = PlagBoard()
+        self.rotatingrogor = []
+        for i in range(len(r_dicts)):
+            self.rotatingrogor.append(RotatingRotor(r_dicts[i],r_cnts[i]))
+            
+    def crypt(self, array):
+        outarray = []
+        for word in array:
+            word = self.plagboard.output(word)
+            for i in range(len(self.rotatingrogor)):
+                word = self.rotatingrogor[i].output(word, 0)
+            word = self.reflector.output(word)
+            for i in range(len(self.rotatingrogor)):
+                word = self.rotatingrogor[len(self.rotatingrogor)-1-i].output(word, 1)
+            word = self.plagboard.output(word)
+            outarray.append(word)
+            rotating = self.rotatingrogor[0].rotor_countup()
+            for i in range(1, len(self.rotatingrogor)):
+                if rotating:
+                    rotating = self.rotatingrogor[i].rotor_countup()
+        return outarray
+
