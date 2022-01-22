@@ -32,9 +32,9 @@ class PlagBoard:
         return input
 
 class Enigma:
-    def __init__(self, r_dicts, r_cnts):
-        self.plagboard = PlagBoard()
-        self.reflector = PlagBoard()
+    def __init__(self, r_dicts, r_cnts, p_list, r_list):
+        self.plagboard = PlagBoard(p_list)
+        self.reflector = PlagBoard(r_list)
         self.rotatingrogor = []
         for i in range(len(r_dicts)):
             self.rotatingrogor.append(RotatingRotor(r_dicts[i],r_cnts[i]))
