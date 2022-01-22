@@ -39,7 +39,20 @@ with open(plagboard_path,'r') as f:
             plagboard.append(swap_word)
             swap_word = []
 
+length = 1
+in_list = []
+files = sys.argv
+file = files[1]
+with open(file,'r') as f:
+    while i := f.read(length):
+        in_list.append(ord(i))
+
 default_r_cnts = [1,1,1,1]
 
 enigma = classes.Enigma(r_dicts,default_r_cnts,plagboard,reflector)
-enigma.crypt()
+out_list = enigma.crypt(in_list)
+
+out_file_name = "out.txt"
+with open(out_file_name,'w') as out_file:
+    out_array = [chr(n) for n in out_list]
+    out_file.writelines(out_array)
