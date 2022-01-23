@@ -46,12 +46,10 @@ with open(plagboard_path,'r') as f:
             swap_word = []
 
 length = 1
+in_word = input("input word  : ")
 in_list = []
-files = sys.argv
-file = files[1]
-with open(file,'r') as f:
-    while i := f.read(length):
-        in_list.append(ord(i))
+for i in range(len(in_word)):
+    in_list.append(ord(in_word[i]))
 
 key = int(input("ini_key :"))
 default_r_cnts = []
@@ -61,12 +59,12 @@ for k in range(len(r_dicts)):
         key = int(key / 10)
     else:
         default_r_cnts.append(0)
-print(default_r_cnts)
 
 enigma = classes.Enigma(r_dicts,default_r_cnts,plagboard,reflector)
 out_list = enigma.crypt(in_list)
 
-out_file_name = "out.txt"
-with open(out_file_name,'w') as out_file:
-    out_array = [chr(n) for n in out_list]
-    out_file.writelines(out_array)
+out_word = ""
+for i in range(len(out_list)):
+    out_word += chr(out_list[i])
+
+print("output word :",out_word)
