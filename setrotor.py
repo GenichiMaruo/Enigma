@@ -14,6 +14,6 @@ for i in range(int(cnt)):
 for i in range(len(outputlen)):
     outputlen[i] += "\n"
 
-out_file_name = "rotors.txt"
+out_file_name = "data/rotors.txt"
 with open(out_file_name,'w') as out_file:
     out_file.writelines(outputlen)

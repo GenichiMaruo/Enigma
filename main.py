@@ -9,19 +9,21 @@ reflector_path = "data/reflector.txt"
 plagboard_path = "data/plagboard.txt"
 r_dict = []
 r_dicts = []
+with open("data/base.txt",'r') as f:
+    basearray = [s.strip() for s in f.readlines()]
+
 with open(rotors_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
-    d = 97
+    d = 0
     for i in filearray:
         n = ord(i)
         if n != ord("#"):
-            r_dict.append([d, n])
+            r_dict.append([ord(basearray[d]), n])
             d += 1
         else:
-            d = 97
+            d = 0
             r_dicts.append(r_dict)
             r_dict = []
-print(r_dicts)
 
 with open(reflector_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
@@ -32,7 +34,6 @@ with open(reflector_path,'r') as f:
         if len(swap_word) != 1:
             reflector.append(swap_word)
             swap_word = []
-print(reflector)
 
 with open(plagboard_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
@@ -43,7 +44,6 @@ with open(plagboard_path,'r') as f:
         if len(swap_word) != 1:
             plagboard.append(swap_word)
             swap_word = []
-print(plagboard)
 
 length = 1
 in_list = []
@@ -53,9 +53,15 @@ with open(file,'r') as f:
     while i := f.read(length):
         in_list.append(ord(i))
 
-default_r_cnts = [1,1,1,1]
-
-print(in_list)
+key = int(input("ini_key :"))
+default_r_cnts = []
+for k in range(len(r_dicts)):
+    if key != 0:
+        default_r_cnts.insert(0, key % 10)
+        key = int(key / 10)
+    else:
+        default_r_cnts.append(0)
+print(default_r_cnts)
 
 enigma = classes.Enigma(r_dicts,default_r_cnts,plagboard,reflector)
 out_list = enigma.crypt(in_list)
