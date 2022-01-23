@@ -11,13 +11,17 @@ r_dict = []
 r_dicts = []
 with open(rotors_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
+    d = 97
     for i in filearray:
         n = ord(i)
         if n != ord("#"):
-            r_dict.append(n)
+            r_dict.append([d, n])
+            d += 1
         else:
+            d = 97
             r_dicts.append(r_dict)
             r_dict = []
+print(r_dicts)
 
 with open(reflector_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
@@ -28,6 +32,7 @@ with open(reflector_path,'r') as f:
         if len(swap_word) != 1:
             reflector.append(swap_word)
             swap_word = []
+print(reflector)
 
 with open(plagboard_path,'r') as f:
     filearray = [s.strip() for s in f.readlines()]
@@ -38,6 +43,7 @@ with open(plagboard_path,'r') as f:
         if len(swap_word) != 1:
             plagboard.append(swap_word)
             swap_word = []
+print(plagboard)
 
 length = 1
 in_list = []
@@ -48,6 +54,8 @@ with open(file,'r') as f:
         in_list.append(ord(i))
 
 default_r_cnts = [1,1,1,1]
+
+print(in_list)
 
 enigma = classes.Enigma(r_dicts,default_r_cnts,plagboard,reflector)
 out_list = enigma.crypt(in_list)

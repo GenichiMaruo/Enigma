@@ -4,16 +4,24 @@ class RotatingRotor:
         self.rotate_cnt = r_cnt
 
     def output(self, input, face):
-        if face == 0:
-            out = self.rotor_dict[(input + self.rotate_cnt) % len(self.rotor_dict)]
-        elif face == 1:
-            for out in range(len(self.rotor_dict)):
-                if self.rotor_dict[out] == input:
-                    break
-        return out
+        print("input =")
+        print(input)
+        for i in range(len(self.rotor_dict)):
+            out = self.rotor_dict[i]
+            if out[face] == input:
+                break
+        print("out =")
+        print(out[(face + 1) % 2])
+        return out[(face + 1) % 2]
 
     def rotor_countup(self):
         self.rotate_cnt = (self.rotate_cnt + 1) % len(self.rotor_dict)
+        for i in range(len(self.rotor_dict)):
+            temp = self.rotor_dict[i]
+            temp[1] = (temp[1]-96)%26+97
+            self.rotor_dict[i] = temp
+        print("rotate!!")
+        print(self.rotor_dict)
         if self.rotate_cnt == 0:
             return 1
         else:
@@ -26,8 +34,10 @@ class PlagBoard:
     def output(self, input):
         for plag in self.plag_list:
             if plag[0] == input:
+                print("swap!")
                 return plag[1]
             elif plag[1] == input:
+                print("swap!")
                 return plag[0]
         return input
 
@@ -41,7 +51,10 @@ class Enigma:
             
     def crypt(self, array):
         outarray = []
+        print(array)
         for word in array:
+            print("word =")
+            print(word)
             word = self.plagboard.output(word)
             for i in range(len(self.rotatingrogor)):
                 word = self.rotatingrogor[i].output(word, 0)
@@ -54,5 +67,8 @@ class Enigma:
             for i in range(1, len(self.rotatingrogor)):
                 if rotating:
                     rotating = self.rotatingrogor[i].rotor_countup()
+            print("word =")
+            print(word)
+            print("\n")
         return outarray
 
