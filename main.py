@@ -53,15 +53,13 @@ with open(file,'r') as f:
     while i := f.read(length):
         in_list.append(ord(i))
 
-key = int(input("ini_key :"))
+key = input("ini_key :")
 default_r_cnts = []
 for k in range(len(r_dicts)):
-    if key != 0:
-        default_r_cnts.insert(0, key % 10)
-        key = int(key / 10)
+    if len(key) > k:
+        default_r_cnts.append(ord(key[k])-96)
     else:
         default_r_cnts.append(0)
-print(default_r_cnts)
 
 enigma = classes.Enigma(r_dicts,default_r_cnts,plagboard,reflector)
 out_list = enigma.crypt(in_list)

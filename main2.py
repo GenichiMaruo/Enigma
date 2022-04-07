@@ -51,12 +51,11 @@ in_list = []
 for i in range(len(in_word)):
     in_list.append(ord(in_word[i]))
 
-key = int(input("ini_key :"))
+key = input("ini_key :")
 default_r_cnts = []
 for k in range(len(r_dicts)):
-    if key != 0:
-        default_r_cnts.insert(0, key % 10)
-        key = int(key / 10)
+    if len(key) > k:
+        default_r_cnts.append(ord(key[k])-96)
     else:
         default_r_cnts.append(0)
 
