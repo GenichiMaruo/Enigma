@@ -1,7 +1,15 @@
+import numpy as np
+
 class RotatingRotor:
     def __init__(self, r_dict, r_cnt):
         self.rotor_dict = r_dict
         self.rotate_cnt = r_cnt
+        rotor_dict_tmp = []
+        for i in range(len(self.rotor_dict)):
+            rotor_dict_tmp.append(self.rotor_dict[i][1])
+        rotor_dict_tmp = np.roll(rotor_dict_tmp, self.rotate_cnt)
+        for i in range(len(self.rotor_dict)):
+            self.rotor_dict[i][1] = rotor_dict_tmp[i]
 
     def output(self, input, face):
         for i in range(len(self.rotor_dict)):
@@ -12,10 +20,12 @@ class RotatingRotor:
 
     def rotor_countup(self):
         self.rotate_cnt = (self.rotate_cnt + 1) % len(self.rotor_dict)
+        rotor_dict_tmp = []
         for i in range(len(self.rotor_dict)):
-            temp = self.rotor_dict[i]
-            temp[1] = (temp[1]-96)%26+97
-            self.rotor_dict[i] = temp
+            rotor_dict_tmp.append(self.rotor_dict[i][1])
+        rotor_dict_tmp = np.roll(rotor_dict_tmp, 1)
+        for i in range(len(self.rotor_dict)):
+            self.rotor_dict[i][1] = rotor_dict_tmp[i]
         if self.rotate_cnt == 0:
             return 1
         else:
